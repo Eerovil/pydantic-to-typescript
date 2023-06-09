@@ -61,14 +61,7 @@ def is_concrete_pydantic_model(obj) -> bool:
     Return true if an object is a concrete subclass of pydantic's BaseModel.
     'concrete' meaning that it's not a GenericModel.
     """
-    if not inspect.isclass(obj):
-        return False
-    elif obj is BaseModel:
-        return False
-    elif GenericModel and issubclass(obj, GenericModel):
-        return bool(obj.__concrete__)
-    else:
-        return issubclass(obj, BaseModel)
+    return isinstance(obj, ModelMetaclass)
 
 
 def extract_pydantic_models(module: ModuleType) -> List[Type[BaseModel]]:
